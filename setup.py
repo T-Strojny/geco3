@@ -4,14 +4,14 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
-    name="geco-data-generator-corruptor-p3",
+    name="Python3_GeCo_data_generator_corurptor",
     version="0.1.0",
     author="Tymoteusz Strojny",
     author_email="tymek.strojny@gmail.com",
     description="A flexible data generation and corruption system",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/T-Strojny/Python3-GeCo-data-generator-corurptor",
+    url="https://github.com/T-Strojny/Python3_GeCo_data_generator_corurptor",
     packages=find_packages(),
     classifiers=[
         "Development Status :: 3 - Alpha",
@@ -27,9 +27,9 @@ setup(
     ],
     python_requires=">=3.6",
     install_requires=[
-        # Add any dependencies here
+        
     ],
     package_data={
-        "geco_data_generator_corruptor-p3": ["lookup-files/*.csv"],
+        "Python3_GeCo_data_generator_corurptor": ["lookup-files/*.csv"],
     },
 )
