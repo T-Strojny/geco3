@@ -1,0 +1,22 @@
+Metadata-Version: 2.1
+Name: Python3-GeCo-data-generator-corurptor
+Version: 0.1.0a0
+Summary: A flexible data generation and corruption system
+Home-page: https://github.com/T-Strojny/Python3_GeCo_data_generator_corurptor
+Author: Tymoteusz Strojny
+Author-email: tymek.strojny@gmail.com
+Classifier: License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+## Modifications
+This project is a modified version of ANU Online Personal Data Generator and Corruptor (GeCo) by Khoi-Nguyen Tran, Dinusha Vatsalan, and Peter Christen. (https://dmm.anu.edu.au/geco/index.php)
+The original code was licensed under MPL 2.0 and written for Python 2.
+
+Changes made by Tymoteusz Strojny in August 2024:
+- Converted codebase from Python 2 to Python 3
+
+The modified code remains under the MPL 2.0 license.

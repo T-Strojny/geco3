@@ -34,7 +34,7 @@
 
 import random
 
-import geco3.basefunctions as basefunctions
+import basefunctions
 
 # =============================================================================
 # Classes for generating a single attribute (field) of the data set

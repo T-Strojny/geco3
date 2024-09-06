@@ -1,0 +1,7 @@
+LICENSE
+README.md
+setup.py
+Python3_GeCo_data_generator_corurptor.egg-info/PKG-INFO
+Python3_GeCo_data_generator_corurptor.egg-info/SOURCES.txt
+Python3_GeCo_data_generator_corurptor.egg-info/dependency_links.txt
+Python3_GeCo_data_generator_corurptor.egg-info/top_level.txt
