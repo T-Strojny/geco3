@@ -1,19 +1,13 @@
-# Import main components and functions
-
-# Core modules
 from .basefunctions import *
 from .generator import *
 from .corruptor import *
 
-# Attribute generation functions
 from .attrgenfunct import *
 
-# Continuous dependent functions
 from .contdepfunct import *
 
-# Define what gets imported with "from package import *"
 __all__ = [
-    # From basefunctions
+    #basefunctions
     'check_is_not_none', 'check_is_string', 'check_is_unicode_string',
     'check_is_number', 'check_is_positive', 'check_is_not_negative',
     'check_is_normalised', 'check_is_integer', 'check_is_float',
@@ -22,32 +16,21 @@ __all__ = [
     'char_set_ascii', 'char_set_unicode', 'float_to_str',
     'str2comma_separated_list', 'read_csv_file', 'write_csv_file',
     
-    # From generator
+    #generator
     'GenerateAttribute', 'GenerateCateCateCompoundAttribute',
     'GenerateCateContCompoundAttribute', 'GenerateContContCompoundAttribute',
     'GenerateDataSet',
     
-    # From corruptor
+    #corruptor
     'CorruptDataSet', 'CorruptValue', 'CorruptCategoricalValue',
     'CorruptNumericValue',
     
-    # From attrgenfunct
+    #attrgenfunct
     'generate_phone_number_australia',
     
-    # From contdepfunct
-    # Add any relevant functions from contdepfunct.py
 ]
 
-# Add any initialization code if needed
-# For example:
-import random
-random.seed(42)  # Set a default seed for reproducibility
-
-# You might want to set up logging here as well
 import logging
 logging.basicConfig(level=logging.INFO)
 
-# Version information
 __version__ = 'v0.1.0-alpha'
-
-# Any other module-wide constants or configurations can be added here
