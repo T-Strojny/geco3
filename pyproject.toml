@@ -11,7 +11,7 @@ authors = [
     { name = "Tymoteusz Strojny", email = "tymek.strojny@gmail.com" }
 ]
 license = { file = "LICENSE" }
-homepage = "https://github.com/T-Strojny/Python3_GeCo_data_generator_corurptor"
+homepage = "https://github.com/T-Strojny/geco3"
 keywords = ["data generation", "data corruption", "synthetic data"]
 classifiers = [
     "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)",
