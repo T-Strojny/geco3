@@ -23,9 +23,6 @@ classifiers = [
 packages = ["find:"]
 include_package_data = true
 
-[tool.setuptools.packages.find]
-where = ["geco3"]
-
 [project.optional-dependencies]
 testing = [
     "pytest",
