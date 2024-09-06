@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "geco3"
+version = "0.1.1"
+description = "A flexible data generation and corruption system"
+authors = ["Tymoteusz Strojny <tymek.strojny@gmail.com>"]
+readme = "README.md"
+packages = [{ include = "geco3"}]
+license = "MPL 2.0"
+repository = "https://github.com/T-Strojny/geco3"
+keywords = ["data generation", "data corruption"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)",
+    "Operating System :: OS Independent",
+]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
