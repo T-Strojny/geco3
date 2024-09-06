@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "geco3"
+version = "0.1.0-alpha"
+description = "A flexible data generation and corruption system"
+readme = "README.md"
+authors = [
+    { name = "Tymoteusz Strojny", email = "tymek.strojny@gmail.com" }
+]
+license = { file = "LICENSE" }
+homepage = "https://github.com/T-Strojny/Python3_GeCo_data_generator_corurptor"
+keywords = ["data generation", "data corruption", "synthetic data"]
+classifiers = [
+    "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+]
+
+[tool.setuptools]
+packages = ["find:"]
+include_package_data = true
+
+[tool.setuptools.packages.find]
+where = ["geco3"]
+
+[project.optional-dependencies]
+testing = [
+    "pytest",
+    "pytest-cov",
+]
