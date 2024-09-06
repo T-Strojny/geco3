@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="Python3_GeCo_data_generator_corurptor",
-    version="0.1.0",
+    version="v0.1.0-alpha",
     author="Tymoteusz Strojny",
     author_email="tymek.strojny@gmail.com",
     description="A flexible data generation and corruption system",
