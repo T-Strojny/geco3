@@ -71,6 +71,18 @@ def generate_phone_number_australia():
 
 # -----------------------------------------------------------------------------
 #
+def generate_phone_number_poland():
+  num = []
+
+  prefix = random.choice(["45","50", "51", "53", "57", "60", "66", "69", "72", "73", "78", "79", "88"] )
+  num.append(prefix)
+
+  for _ in range(7):
+    number1 = random.randint(0, 9)
+    num.append(str(number1))
+  return "".join(num)
+# -----------------------------------------------------------------------------
+#
 def generate_credit_card_number():
   """Randomly generate a credit card made of four four-digit numbers (with a
      space between each number group). For example: '1234 5678 9012 3456'

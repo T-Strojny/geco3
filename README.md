@@ -4,5 +4,6 @@ The original code was licensed under MPL 2.0 and written for Python 2.
 
 Changes made by Tymoteusz Strojny in August 2024:
 - Converted codebase from Python 2 to Python 3
+- Added generate_phone_number_poland function in attrgenfunct.py file
 
 The modified code remains under the MPL 2.0 license.
