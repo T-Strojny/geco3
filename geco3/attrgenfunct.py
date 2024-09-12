@@ -25,7 +25,7 @@
 # Modified work:
 # Tymoteusz Strojny, August 2024
 # - Converted from Python 2 to Python 3
-# - Added generate_phone_number_poland and generate_birthday_year functions
+# - Added generate_phone_number_poland and generate_birthdate functions
 #
 # =============================================================================
 #
@@ -85,16 +85,69 @@ def generate_phone_number_poland():
   return "".join(num)
 
 # -----------------------------------------------------------------------------
+#
 
-def generate_birthday_year():
-  """Generate birthday year as from triangular distribution
-  return : str : generated year as a string. Assumes mode age in population is 35."""
+def generate_birthdate(mode_age=35, distribution="triangular", year_only=True, format=None):
+  """Generate birthdate as a String, depending on year_only generate either year of birth or date of birth
+  params:
+    mode_age : int : mode age in a population, used for triangular distribution, must be less than 100.
+  
+    distribution : String : distribution from which birthyears will be generated.
+      Options -> ["normal", "triangular", "uniform"]
+    year_only : bool : decide if function should retrun birthyear or birthdate.
+
+    format : String : format in which birthdate should be generated.
+      Options -> ["MM/DD/YYYY", "DD/MM/YYYY", "YYYY/MM/DD"] 
+
+  return : String : birthdate or birthyear"""
+  
   current_year = datetime.now().year
   min_year = current_year - 100
-  mode_year = current_year - 35
+  mode_year = current_year - mode_age
 
-  return str(int(random.triangular(min_year, current_year, mode_year)))
+  if distribution == 'uniform':
+    return_year = random.randint(min_year, current_year)
+      
+  elif distribution == 'triangular':
+    return_year = int(random.triangular(min_year, current_year, mode_year))
+      
+  elif distribution == 'normal':
+    mean = current_year - 40
+    std_dev = 15
+    year = int(random.gauss(mean, std_dev))
+    return_year =  max(min_year, min(year, current_year))
 
+  else:
+    raise ValueError("Invalid distribution. Choose 'uniform', 'triangular' or 'normal'")
+  
+  #----------------------------------------------------------------------------
+
+  if year_only:
+    return str(return_year)
+  
+  elif year_only == False:
+    is_leap = (return_year % 4 == 0 and return_year % 100 != 0) or (return_year % 400 == 0)
+
+    days_in_month = {
+        1: 31, 2: 29 if is_leap else 28, 3: 31, 4: 30, 5: 31, 6: 30,
+        7: 31, 8: 31, 9: 30, 10: 31, 11: 30, 12: 31
+    }
+
+    month = random.randint(1, 12)
+    day = random.randint(1, days_in_month[month])
+
+    if format == 'MM/DD/YYYY':
+      return f"{month:02d}/{day:02d}/{return_year}"
+    elif format == 'DD/MM/YYYY':
+      return f"{day:02d}/{month:02d}/{return_year}"
+    elif format == "YYYY/MM/DD":
+      return f"{return_year}/{month:02d}/{day:02d}"
+    else:
+      raise ValueError("Invalid format. Use 'MM/DD/YYYY' or 'DD/MM/YYYY' or 'YYYY/MM/DD'.")
+  
+  else:
+    raise ValueError("Incorrect year_only value. Select True or False")
+  
 # -----------------------------------------------------------------------------
 #
 def generate_credit_card_number():
