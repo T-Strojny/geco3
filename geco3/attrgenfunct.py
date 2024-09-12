@@ -25,6 +25,7 @@
 # Modified work:
 # Tymoteusz Strojny, August 2024
 # - Converted from Python 2 to Python 3
+# - Added generate_phone_number_poland and generate_birthday_year functions
 #
 # =============================================================================
 #
@@ -43,7 +44,7 @@
 # =============================================================================
 
 import random
-
+from datetime import datetime
 import geco3.basefunctions as basefunctions
 
 # -----------------------------------------------------------------------------
@@ -72,6 +73,7 @@ def generate_phone_number_australia():
 # -----------------------------------------------------------------------------
 #
 def generate_phone_number_poland():
+  """Randomly generate a Polish telephone number made of a two-digit prefix and seven-digit number."""
   num = []
 
   prefix = random.choice(["45","50", "51", "53", "57", "60", "66", "69", "72", "73", "78", "79", "88"] )
@@ -81,6 +83,18 @@ def generate_phone_number_poland():
     number1 = random.randint(0, 9)
     num.append(str(number1))
   return "".join(num)
+
+# -----------------------------------------------------------------------------
+
+def generate_birthday_year():
+  """Generate birthday year as from triangular distribution
+  return : str : generated year as a string. Assumes mode age in population is 35."""
+  current_year = datetime.now().year
+  min_year = current_year - 100
+  mode_year = current_year - 35
+
+  return str(int(random.triangular(min_year, current_year, mode_year)))
+
 # -----------------------------------------------------------------------------
 #
 def generate_credit_card_number():
@@ -249,6 +263,11 @@ if (__name__ == '__main__'):
   print(f'Generate {num_test} Australian telephone numbers:')
   for i in range(num_test):
     print(' ', generate_phone_number_australia())
+  print()
+
+  print(f"Generate {num_test} Polish telephone numbers:")
+  for i in range(num_test):
+    print(" ", generate_phone_number_poland())
   print()
 
   print('Generate %d credit card numbers:' % (num_test))
