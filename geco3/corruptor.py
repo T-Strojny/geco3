@@ -35,6 +35,8 @@
 
 import math
 import random
+import re
+import numpy as np
 
 import geco3.basefunctions as basefunctions
 
@@ -1956,3 +1958,32 @@ class CorruptDataSet:
     return rec_dict
 
 # =============================================================================
+
+  def corrupt_names(self, rec_dict, prob, first_col_index, second_col_index, third_col_index=None):
+    pattern = r'dup-\d+$'
+    return_dict = {} 
+    
+    for key, value_list in rec_dict.items():
+
+      if re.search(pattern, key):
+        random_num = np.random.randint(0,1)
+
+        if random_num < prob:
+          new_val_list = value_list.copy()
+          new_val_list[first_col_index], new_val_list[second_col_index] = new_val_list[second_col_index], new_val_list[first_col_index]
+          return_dict[key] = new_val_list
+        else:
+          return_dict[key] = value_list
+        
+
+      else:
+        return_dict[key] = value_list
+
+    #return_dict = dict(sorted(return_dict.keys()))
+    return return_dict
+  
+
+
+
+
+    
