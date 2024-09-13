@@ -8,6 +8,7 @@
 # Modified work:
 # Tymoteusz Strojny, August 2024
 # - Converted from Python 2 to Python 3
+# - Added CorruptBirthYear class
 #
 # =============================================================================
 #
@@ -1360,19 +1361,31 @@ class CorruptCategoricalValue(CorruptValue):
 
 
 # =============================================================================
-class CorruptBirthdayYear(CorruptValue):
+class CorruptBirthYear(CorruptValue):
   """
-    Corrupts the given year string by swapping the last two digits.
-    For example, 1991 becomes 1919.
+    Corrupts the given birthdate or birth year string by swapping the last two digits of the birth year.
+    For example, 1991 becomes 1919 or 13/09/1991 becomes 13/09/1919
+
+    params:
+      date_format : String : format of a given date, ailable formats --> "YYYY", "YYYY/MM/DD", "DD/MM/YYYY", "MM/DD/YYYY"
+    
+    return : corrupted date 
   """     
 
   def __init__(self, **kwargs):
     self.name = "Birthday_Year"
+    self.date_format = None
 
     def dummy_position(s):
       return 0
     
     base_kwargs = {}
+
+    for (keyword, value) in kwargs.items():
+
+      if (keyword.startswith('date_format')):
+        basefunctions.check_is_non_empty_string('date_format', value)
+        self.date_format = value
 
     base_kwargs['position_function'] = dummy_position
 
@@ -1381,12 +1394,20 @@ class CorruptBirthdayYear(CorruptValue):
   # ---------------------------------------------------------------------------
 
   def corrupt_value(self, in_str):
-    if len(in_str) != 4:
-      raise ValueError("Year must be a 4-digit string")
+    if self.date_format == "YYYY":
+      corrupted_val = in_str[:2] + in_str[-1] + in_str[-2]
     
-    corrupted_year = in_str[:2] + in_str[-1] + in_str[-2]
+    elif self.date_format == "DD/MM/YYYY" or self.date_format == "MM/DD/YYYY":
+      corrupted_val = in_str[:8] + in_str[-1] + in_str[-2] 
+    
+    elif self.date_format == "YYYY/MM/DD":
+      corrupted_val = in_str[1] + in_str[0] + in_str[2:]
+    
+    else:
+      raise ValueError('Incorect date format. Select from "YYYY", "YYYY/MM/DD", "DD/MM/YYYY", "MM/DD/YYYY"')
+      
 
-    return corrupted_year
+    return corrupted_val
   
 # =============================================================================
 
