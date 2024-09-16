@@ -1980,7 +1980,7 @@ class CorruptDataSet:
 
 # =============================================================================
 
-  def corrupt_names(self, rec_dict:dict, type: str = "switch", prob: float=0.5, first_col_index:int=None, second_col_index:int=None):
+  def corrupt_names(self, rec_dict:dict, type: str = "switch", prob: float=0.5, first_col_index=None, second_col_index=None, third_col_index=None):
     """
     Experimental method used for corruption of multiple attributes containing names and/or surnames.
 
@@ -1989,7 +1989,7 @@ class CorruptDataSet:
       type : what type of corruption to apply:
         - switch -> switches first attribute with the second attribute
         - concat -> concatenates both attributes and puts it in the first attribute, leaving second attribute as an empty String
-      prob : probability of corrupting given row of data, corrupts only the rows which are duplicates obtainded from Corruptor.
+      prob : probability of corrupting given row of data, corrupts only the rows which are duplicates obtained from Corruptor.
       first_col_index : index of first attribute which should be corrupted
       second_col_index : index of second attribute which should be corrupted
 
@@ -2012,13 +2012,28 @@ class CorruptDataSet:
           
           if type == 'switch':
             
-            new_val_list[first_col_index], new_val_list[second_col_index] = new_val_list[second_col_index], new_val_list[first_col_index]
-            return_dict[key] = new_val_list
+            if third_col_index is not None:
+
+              shuffle_list = [new_val_list[first_col_index], new_val_list[second_col_index], new_val_list[third_col_index]]
+              random.shuffle(shuffle_list)
+              new_val_list[first_col_index], new_val_list[second_col_index], new_val_list[third_col_index] = shuffle_list[0], shuffle_list[1], shuffle_list[2]
+
+            else:
+
+              new_val_list[first_col_index], new_val_list[second_col_index] = new_val_list[second_col_index], new_val_list[first_col_index]
 
           elif type == 'concat':
-            new_val_list[first_col_index], new_val_list[second_col_index] = new_val_list[first_col_index] + " " + new_val_list[second_col_index], ""
-            return_dict[key] = new_val_list
 
+            if third_col_index is not None:
+              
+              new_val_list[first_col_index], new_val_list[second_col_index], new_val_list[third_col_index] = new_val_list[first_col_index] + " " + new_val_list[second_col_index] + " " + new_val_list[third_col_index], "", ""
+
+            else:
+
+              new_val_list[first_col_index], new_val_list[second_col_index] = new_val_list[first_col_index] + " " + new_val_list[second_col_index], ""
+             
+          return_dict[key] = new_val_list
+        
         else:
           return_dict[key] = value_list
         
