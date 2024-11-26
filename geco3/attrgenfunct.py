@@ -23,9 +23,10 @@
 # Peter Christen and Dinusha Vatsalan, January-March 2012
 #
 # Modified work:
-# Tymoteusz Strojny, August 2024
+# Tymoteusz Strojny, 2024
 # - Converted from Python 2 to Python 3
 # - Added generate_phone_number_poland and generate_birthdate functions
+# - Added generate_polish_personal_id function
 #
 # =============================================================================
 #
@@ -44,6 +45,7 @@
 # =============================================================================
 
 import random
+import string
 from datetime import datetime
 import geco3.basefunctions as basefunctions
 
@@ -148,6 +150,36 @@ def generate_birthdate(mode_age=35, distribution="triangular", year_only=True, f
   else:
     raise ValueError("Incorrect year_only value. Select True or False")
   
+# -----------------------------------------------------------------------------
+#
+def generate_polish_personal_id():
+    """
+    Randomly generate a valid Polish ID number.
+    Format: ABC123456
+    - First three characters are uppercase letters (except B, I, O, Q, U, V)
+    - Followed by 5 digits
+    - Last character is a checksum digit
+    """
+    valid_letters = [c for c in string.ascii_uppercase if c not in 'BIOQVU']
+
+    letters = ''.join(random.choices(valid_letters, k=3))
+
+    digits = ''.join(random.choices(string.digits, k=5))
+
+    weights = [7, 3, 1, 9, 7, 3, 1, 7, 3]
+    values = []
+
+    for letter in letters:
+        values.append(ord(letter) - ord('A') + 10)
+
+    for digit in digits:
+        values.append(int(digit))
+
+    checksum = sum(w * v for w, v in zip(weights, values)) % 10
+
+    id_number = f"{letters}{digits}{checksum}"
+
+    return id_number
 # -----------------------------------------------------------------------------
 #
 def generate_credit_card_number():

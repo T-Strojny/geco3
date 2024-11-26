@@ -11,6 +11,7 @@
 # - Added CorruptBirthYear class
 # - Added CorruptPlaceholder class
 # - Added corrupt_names method
+# - Added CorruptPolishLetters class
 #
 # =============================================================================
 #
@@ -1412,7 +1413,106 @@ class CorruptBirthYear(CorruptValue):
       
 
     return corrupted_val
-  
+
+# =============================================================================
+class CorruptPolishLetters(CorruptValue):
+  """
+    A class for corrupting Polish letters in text strings by replacing them with common misspellings
+    or alternative representations. Handles both upper and lower case characters.
+
+    Example:
+        >>> corruptor = CorruptPolishLetters()
+        >>> corruptor.corrupt_value("ząb")  # might return "zomb" or "zab"
+        >>> corruptor.corrupt_value("ŁÓDŹ")  # might return "LUDZ" or "LODZ"
+    """
+  def __init__(self, **kwargs):
+        """
+        Initialize the CorruptPolishLetters corruption class.
+
+        Args:
+            **kwargs: Arbitrary keyword arguments passed to the parent CorruptValue class.
+                     These arguments are preserved and passed to the parent constructor.
+
+        Notes:
+            - A dummy position function is automatically added to the kwargs
+            - All original kwargs are preserved and passed to the parent class
+        """
+        self.name = "polish_letters"
+        def dummy_position(s):
+            return 0
+
+        base_kwargs = {}
+        for (keyword, value) in kwargs.items():
+            base_kwargs[keyword] = value
+
+        base_kwargs['position_function'] = dummy_position
+
+        CorruptValue.__init__(self, base_kwargs)
+
+  def corrupt_value(self, in_str):
+    corruption_map = {
+            'ą': ['OŁ', 'OM', 'A'],
+            'ę': ['EN', 'EŁ', 'E'],
+            'i': ['Y', 'II'],
+            'u': ['Ó'],
+            'o': ['Ó',],
+            'ó': ['U', 'O'],
+            'ł': ['L', 'W'],
+            'ń': ['N', 'NI'],
+            'ś': ['SI', 'S'],
+            'z': ['Ź', 'Ż'],
+            'ź': ['ZI', 'Z'],
+            'ż': ['Z', 'RZ'],
+            'c': ['TZ'],
+            'ć': ['CI', 'C'],
+            'w': ['V', 'Ł'],
+            'v': ['W', 'F'],
+            'rz': ['Ż', 'R'],
+            'dz': ['DŹ', 'D', 'C', 'DC'],
+            'dź': ['DZ', 'DZI'],
+            'dż': ['DZ', 'Ż', 'DRZ']
+        }
+
+    positions = []
+    i = 0
+    while i < len(in_str):
+        current_slice = in_str[i:i+2].lower()
+        if current_slice in ['rz', 'dz', 'dż', 'dź']:
+            positions.append((i, 2))
+            i += 2
+        elif in_str[i].lower() in corruption_map:
+            positions.append((i, 1))
+            i += 1
+        else:
+            i += 1
+
+    if not positions:
+        return in_str
+
+    pos, length = random.choice(positions)
+    chars = list(in_str)
+    org = in_str[pos:pos+length]
+    org_lower = org.lower()
+
+    replacement = random.choice(corruption_map[org_lower])
+
+    if length == 1:
+        if org.isupper():
+            replacement = replacement.upper()
+        else:
+            replacement = replacement.lower()
+    else:
+        if org.isupper():
+            replacement = replacement.upper()
+        elif org.islower():
+            replacement = replacement.lower()
+        else:
+            if org[0].isupper():
+                replacement = replacement[0].upper() + replacement[1:].lower()
+
+    chars[pos:pos+length] = replacement
+
+    return ''.join(chars)
 # =============================================================================
 class CorruptPlaceholder(CorruptValue):
   """Placeholder function to put in as a corruptor when no corruptions to the attribute are desired."""
